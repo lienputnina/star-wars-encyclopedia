@@ -1,27 +1,11 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  HttpLink,
-  ApolloLink,
-} from '@apollo/client';
-import { onError } from '@apollo/client/link/error';
+import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
 const httpLink = new HttpLink({
-  uri: 'https://flyby-router-demo.herokuapp.com/', // Replace with my GraphQL endpoint!
-});
-
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    graphQLErrors.forEach(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      ),
-    );
-  }
-  if (networkError) console.log(`[Network error]: ${networkError}`);
+  uri: 'https://flyby-router-demo.herokuapp.com/',
 });
 
 export const client = new ApolloClient({
-  link: ApolloLink.from([errorLink, httpLink]),
+  ssrMode: true,
+  link: httpLink,
   cache: new InMemoryCache(),
 });

@@ -1,6 +1,5 @@
-'use client';
-
-import { gql, useQuery } from '@apollo/client';
+import { gql } from '@apollo/client';
+import { client } from '../lib/apollo-client';
 
 const GET_LOCATIONS = gql`
   query GetLocations {
@@ -13,11 +12,10 @@ const GET_LOCATIONS = gql`
   }
 `;
 
-export function ExampleComponent() {
-  const { loading, error, data } = useQuery(GET_LOCATIONS);
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
+export const ExampleComponent = async () => {
+  const { data } = await client.query({
+    query: GET_LOCATIONS,
+  });
 
   return (
     <div>
@@ -30,4 +28,4 @@ export function ExampleComponent() {
       ))}
     </div>
   );
-}
+};
