@@ -1,7 +1,8 @@
 import { ApolloClient, InMemoryCache, HttpLink } from '@apollo/client';
 
+// Make fancy later
 const httpLink = new HttpLink({
-  uri: 'https://flyby-router-demo.herokuapp.com/',
+  uri: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
 });
 
 export const client = new ApolloClient({
