@@ -61,7 +61,6 @@ export const CharacterPage = async ({ params }: { params: { id: string } }) => {
   let error = null;
 
   try {
-    await client.cache.reset();
     const { data: characterData } = await client.query<Character>({
       query: GET_CHARACTER,
       variables: { id: decodeURIComponent(id) },
