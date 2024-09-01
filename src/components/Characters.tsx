@@ -53,13 +53,14 @@ export const Characters: FC = async () => {
           key={character.id}
         >
           <li className="mb-2">
-            <p className=" p-0.5">Name: {character.name}</p>
-            <p className=" p-0.5">Birth Year: {character.birthYear}</p>
-            <p className=" p-0.5">
-              Species: {character.species?.name || 'unknown'}
-            </p>
-            <p className=" p-0.5">Homeworld: {character.homeworld.name}</p>
-            <p className=" p-0.5">
+            <p className="character-name">{character.name}</p>
+            <div className="character-description flex">
+              <p>
+                Born in {character.birthYear} on {character.homeworld.name} of
+                species {character.species?.name || 'unknown'}
+              </p>
+            </div>
+            <p className="character-films">
               Films:{' '}
               {character.filmConnection.films
                 .map((film) => film.title)
