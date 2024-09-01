@@ -1,9 +1,8 @@
 import { gql } from '@apollo/client';
 import { FC } from 'react';
 import Link from 'next/link';
-import { query } from '@/server/apollo-client';
+import { getClient } from '@/server/apollo-client';
 
-// add more details about the homeworld
 export const GET_CHARACTERS = gql`
   query GetCharacters {
     allPeople {
@@ -17,11 +16,6 @@ export const GET_CHARACTERS = gql`
         homeworld {
           name
         }
-        starshipConnection {
-          starships {
-            name
-          }
-        }
         filmConnection {
           films {
             title
@@ -34,25 +28,25 @@ export const GET_CHARACTERS = gql`
 
 export interface Characters {
   allPeople: { people: [] };
-  id: number;
+  id: string;
   name: string;
   birthYear: string;
   species: { name: string };
   homeworld: { name: string };
-  starshipConnection: {
-    starships: [{ name: string }];
-  };
   filmConnection: {
     films: [{ title: string }];
   };
 }
 
 export const Characters: FC = async () => {
-  const { data: charactersData } = await query({ query: GET_CHARACTERS });
+  const client = getClient();
+  const { data: charactersData } = await client.query<Characters>({
+    query: GET_CHARACTERS,
+  });
 
   return (
-    <div className="star-wars-characters pt-8">
-      <h1 className="text-lg text-center pb-4">All characters: </h1>
+    <div className="star-wars-characters">
+      <h1 className="text-lg text-center mb-4">All characters: </h1>
       {charactersData.allPeople.people.map((character: Characters) => (
         <ul
           className="data-part border-solid border-orange-400 border-2 mb-2 text-left p-2"
@@ -65,12 +59,6 @@ export const Characters: FC = async () => {
               Species: {character.species?.name || 'unknown'}
             </p>
             <p className=" p-0.5">Homeworld: {character.homeworld.name}</p>
-            <p className=" p-0.5">
-              Starships:{' '}
-              {character.starshipConnection?.starships
-                .map((starship) => starship.name)
-                .join(', ') || 'no starships'}
-            </p>
             <p className=" p-0.5">
               Films:{' '}
               {character.filmConnection.films
