@@ -1,13 +1,36 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useQuery } from '@apollo/client';
+import { gql, useQuery } from '@apollo/client';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
-import { Characters, GET_CHARACTERS } from './Characters';
+import { Characters } from './Characters';
 import { CharacterNotFound } from './CharacterNotFound';
 import ErrorPage from './ErrorPage';
+
+export const GET_CHARACTERS = gql`
+  query GetCharacters {
+    allPeople {
+      people {
+        id
+        name
+        birthYear
+        species {
+          name
+        }
+        homeworld {
+          name
+        }
+        filmConnection {
+          films {
+            title
+          }
+        }
+      }
+    }
+  }
+`;
 
 export const Search = () => {
   const [searchQuery, setSearchQuery] = useState('');

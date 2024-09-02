@@ -1,31 +1,7 @@
 'use client';
 
-import { gql } from '@apollo/client';
 import { FC } from 'react';
 import Link from 'next/link';
-
-export const GET_CHARACTERS = gql`
-  query GetCharacters {
-    allPeople {
-      people {
-        id
-        name
-        birthYear
-        species {
-          name
-        }
-        homeworld {
-          name
-        }
-        filmConnection {
-          films {
-            title
-          }
-        }
-      }
-    }
-  }
-`;
 
 export interface Characters {
   allPeople: { people: [] };
