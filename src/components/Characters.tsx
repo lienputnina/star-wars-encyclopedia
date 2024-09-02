@@ -1,5 +1,3 @@
-'use client';
-
 import { FC } from 'react';
 import Link from 'next/link';
 
@@ -36,12 +34,6 @@ export const Characters: FC<{ people: Characters[] }> = ({
                 of species {character.species?.name || 'unknown'}
               </p>
             </div>
-            <p className="character-films">
-              Films:{' '}
-              {character.filmConnection.films
-                .map((film) => film.title)
-                .join(', ')}
-            </p>
           </li>
           <Link
             href={`/character/${character.id}`}

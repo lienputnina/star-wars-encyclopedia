@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { Search } from '@/components/Search';
+import { Search } from '@/components/Search/Search';
 
 const Home: NextPage = () => {
   return (
