@@ -21,6 +21,9 @@ importers:
       '@apollo/client':
         specifier: 3.11.5
         version: 3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@apollo/experimental-nextjs-app-support':
+        specifier: ^0.11.3
+        version: 0.11.3(@apollo/client@3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@types/node':
         specifier: ^20
         version: 20.16.1
@@ -61,6 +64,12 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
+  '@apollo/client-react-streaming@0.11.3':
+    resolution: {integrity: sha512-bAyyD7iZQ8UIvYZv2ZY3i5FTNdCgM0kfWW/0St3sqJLAs4Ji6QB9uzGUTc5434vQo6Ddb17N+Q+Ikr7fj2yTxw==}
+    peerDependencies:
+      '@apollo/client': ^3.10.4
+      react: ^18
+
   '@apollo/client@3.11.5':
     resolution: {integrity: sha512-gmTKgXhYH2Q3VT9vUWChuMy34gfK7n/EEJYc7kXt1GP7678Vz2L0xUlHSMEoPoqit317eamZjXQSyxlpn03lnQ==}
     peerDependencies:
@@ -78,6 +87,13 @@ packages:
         optional: true
       subscriptions-transport-ws:
         optional: true
+
+  '@apollo/experimental-nextjs-app-support@0.11.3':
+    resolution: {integrity: sha512-eMfbEtHyQE9EceBn0sTBWcHVvjhd+dkMO5dBhoEglEm0ga2n87KKiTeaNNb/XZnvOX81/6y0iyc0U7cgITpvKw==}
+    peerDependencies:
+      '@apollo/client': ^3.10.4
+      next: ^13.4.1 || ^14.0.0 || 15.0.0-rc.0
+      react: ^18
 
   '@cspotcode/source-map-support@0.8.1':
     resolution: {integrity: sha512-IchNf6dN4tHoMFIn/7OE8LWZ19Y6q/67Bmf6vnGREv8RSbBVb9LPJxEcnwrcwX6ixSvaiGoomAUvu4YSxXrVgw==}
@@ -1687,6 +1703,12 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
+  '@apollo/client-react-streaming@0.11.3(@apollo/client@3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@apollo/client': 3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      ts-invariant: 0.10.3
+
   '@apollo/client@3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
@@ -1709,6 +1731,13 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
+
+  '@apollo/experimental-nextjs-app-support@0.11.3(@apollo/client@3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(next@14.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@apollo/client': 3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@apollo/client-react-streaming': 0.11.3(@apollo/client@3.11.5(@types/react@18.3.4)(graphql@16.9.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+      next: 14.2.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
 
   '@cspotcode/source-map-support@0.8.1':
     dependencies:

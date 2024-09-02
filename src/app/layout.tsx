@@ -8,6 +8,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Star Wars Encyclopedia',
   description: 'A comprehensive source on Star Wars characters',
+  icons: {
+    icon: '/favicon.ico',
+  },
 };
 
 const RootLayout = ({

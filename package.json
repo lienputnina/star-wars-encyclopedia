@@ -16,6 +16,7 @@
   },
   "devDependencies": {
     "@apollo/client": "3.11.5",
+    "@apollo/experimental-nextjs-app-support": "^0.11.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
