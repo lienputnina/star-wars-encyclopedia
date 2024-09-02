@@ -23,7 +23,7 @@ export const Characters: FC<{ people: Characters[] }> = ({
       <h1 className="text-lg text-center mb-4">Star Wars characters </h1>
       {people.map((character: Characters) => (
         <ul
-          className="data-part border-solid border-amber-400 border-2 rounded-md mb-4 text-left p-5"
+          className="data-part border-solid border-yellow-300 border-2 rounded-md mb-4 text-left p-5"
           key={character.id}
         >
           <li className="mb-4">
