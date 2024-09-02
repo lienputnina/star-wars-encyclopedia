@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client';
-import { getClient } from '@/server/apollo-client';
+import { serverClient } from '@/server/apollo-client';
 
 export const GET_CHARACTER = gql`
   query GetCharacter($id: ID!) {
@@ -25,10 +25,8 @@ export const GET_CHARACTER = gql`
 `;
 
 export const getCharacterData = async (id: string) => {
-  const client = getClient();
-
   try {
-    const { data: characterData } = await client.query({
+    const { data: characterData } = await serverClient.query({
       query: GET_CHARACTER,
       variables: { id: decodeURIComponent(id) },
     });

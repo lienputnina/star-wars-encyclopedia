@@ -1,18 +1,14 @@
-import { HttpLink } from '@apollo/client';
-import {
-  registerApolloClient,
-  ApolloClient,
-  InMemoryCache,
-} from '@apollo/experimental-nextjs-app-support';
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client';
 
 const httpLink = new HttpLink({
   uri: 'https://swapi-graphql.netlify.app/.netlify/functions/index',
 });
 
-export const { getClient, query, PreloadQuery } = registerApolloClient(() => {
+export const createApolloClient = () => {
   return new ApolloClient({
-    ssrMode: true,
-    link: httpLink,
     cache: new InMemoryCache(),
+    link: httpLink,
   });
-});
+};
+
+export const serverClient = createApolloClient();

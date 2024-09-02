@@ -1,7 +1,8 @@
+'use client';
+
 import { gql } from '@apollo/client';
 import { FC } from 'react';
 import Link from 'next/link';
-import { getClient } from '@/server/apollo-client';
 
 export const GET_CHARACTERS = gql`
   query GetCharacters {
@@ -38,26 +39,25 @@ export interface Characters {
   };
 }
 
-export const Characters: FC = async () => {
-  const client = getClient();
-  const { data: charactersData } = await client.query<Characters>({
-    query: GET_CHARACTERS,
-  });
-
+export const Characters: FC<{ people: Characters[] }> = ({
+  people,
+}: {
+  people: Characters[];
+}) => {
   return (
-    <div className="star-wars-characters">
-      <h1 className="text-lg text-center mb-4">All characters: </h1>
-      {charactersData.allPeople.people.map((character: Characters) => (
+    <div className="star-wars-characters mt-5">
+      <h1 className="text-lg text-center mb-4">Star Wars characters </h1>
+      {people.map((character: Characters) => (
         <ul
-          className="data-part border-solid border-orange-400 border-2 mb-2 text-left p-2"
+          className="data-part border-solid border-amber-400 border-2 rounded-md mb-4 text-left p-5"
           key={character.id}
         >
-          <li className="mb-2">
-            <p className="character-name">{character.name}</p>
+          <li className="mb-4">
+            <h2 className="text-lg font-medium">{character.name}</h2>
             <div className="character-description flex">
               <p>
-                Born in {character.birthYear} on {character.homeworld.name} of
-                species {character.species?.name || 'unknown'}
+                Born in year {character.birthYear} on {character.homeworld.name}{' '}
+                of species {character.species?.name || 'unknown'}
               </p>
             </div>
             <p className="character-films">
@@ -69,7 +69,7 @@ export const Characters: FC = async () => {
           </li>
           <Link
             href={`/character/${character.id}`}
-            className="border-white border-solid border-2 py-1 px-2"
+            className="border-white border-solid border-2 round-md p-1.5 "
           >
             See character
           </Link>

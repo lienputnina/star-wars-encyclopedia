@@ -1,40 +1,77 @@
 'use client';
 
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useQuery } from '@apollo/client';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 
-export const Search = ({ placeholder }: { placeholder: string }) => {
+import { Characters, GET_CHARACTERS } from './Characters';
+import { CharacterNotFound } from './CharacterNotFound';
+import ErrorPage from './ErrorPage';
+
+export const Search = () => {
+  const [searchQuery, setSearchQuery] = useState('');
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const handleSearch = useDebouncedCallback((term) => {
-    console.log(`Searching... ${term}`);
-
+  const handleSearch = useDebouncedCallback((query: string) => {
     const params = new URLSearchParams(searchParams);
-    if (term) {
-      params.set('query', term);
+    if (query) {
+      params.set('query', query);
     } else {
       params.delete('query');
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
 
+  useEffect(() => {
+    const query = searchParams.get('query') || '';
+    setSearchQuery(query);
+  }, [searchParams]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value;
+    setSearchQuery(query);
+    handleSearch(query);
+  };
+
+  const {
+    data: charactersData,
+    loading,
+    error,
+  } = useQuery<Characters>(GET_CHARACTERS);
+
+  if (loading) {
+    return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return <ErrorPage message={error.message} />;
+  }
+
+  if (!charactersData) {
+    return <CharacterNotFound />;
+  }
+
+  const filteredCharacters = charactersData.allPeople.people.filter(
+    (character: Characters) =>
+      character.name.toLowerCase().includes(searchQuery.toLowerCase()),
+  );
+
+  // todo - toSorted sort data a/z z/a. Data sorted A-Z by default
+
   return (
-    <div className="main">
-      <label htmlFor="character-search" className="search-label">
-        Search:
-      </label>
+    <div className="search">
       <input
         id="character-search"
         name="character-search"
-        placeholder={placeholder}
-        onChange={(event) => {
-          handleSearch(event.target.value);
-        }}
-        defaultValue={searchParams.get('query')?.toString()}
-        className="flex flex-grow border-slate-200 border-2 rounded h-8 text-slate-700 py-4 pl-9 bg-transparent w-full max-w-lg mb-4"
+        value={searchQuery}
+        placeholder="Search character"
+        onChange={handleInputChange}
+        className="flex flex-grow border-slate-200  border-2 rounded-md h-8 text-slate-200 py-4 pl-5 bg-transparent w-full max-w-lg mb-4"
       />
+      <Characters people={filteredCharacters} />
     </div>
   );
 };
